@@ -71,8 +71,10 @@ public class WebDownload {
 		writeLog(CompareUtil.DAY_10);
 		CompareUtil.sort(GPInfoGet.mSnakeInfos, CompareUtil.DAY_20);
 		writeLog(CompareUtil.DAY_20);
-		CompareUtil.sort(GPInfoGet.mSnakeInfos, CompareUtil.DAY_ALL);
-		writeLog(CompareUtil.DAY_ALL);
+		CompareUtil.sort(GPInfoGet.mSnakeInfos, CompareUtil.DAY_ALL_SUM);
+		writeLog(CompareUtil.DAY_ALL_SUM);
+		CompareUtil.sort(GPInfoGet.mSnakeInfos, CompareUtil.DAY_ALL_MULTI);
+		writeLog(CompareUtil.DAY_ALL_MULTI);
 		System.out.println("Finish All");
 	}
 	public static void readAllFutureFromFile(){
@@ -224,7 +226,9 @@ public class WebDownload {
 		case 3:
 			return "20";
 		case 4:
-			return "ALL";
+			return "ALL_SUM";
+		case 5:
+			return "ALL_MULTI";
 		}
 		return "err";
 	}
