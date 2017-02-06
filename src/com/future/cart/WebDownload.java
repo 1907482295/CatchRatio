@@ -59,10 +59,10 @@ public class WebDownload {
 	}
 
 	public static void gotAllSnakesCategory() {
-		GPInfoGet.getAllSnake();
+		ArrayList<SnakeInfo> list = GPInfoGet.getAllSnake();
 		//gotAllSnakeFuture();
 		//writeNewSnakeInfo();
-		readAllFutureFromFile();
+		readAllFutureFromFile(Constant.FILE_PATH, list);
 		CompareUtil.sort(GPInfoGet.mSnakeInfos, CompareUtil.DAY_1);
 		writeLog(CompareUtil.DAY_1);
 		CompareUtil.sort(GPInfoGet.mSnakeInfos, CompareUtil.DAY_5);
@@ -77,8 +77,7 @@ public class WebDownload {
 		writeLog(CompareUtil.DAY_ALL_MULTI);
 		System.out.println("Finish All");
 	}
-	public static void readAllFutureFromFile(){
-		ArrayList<SnakeInfo> list = GPInfoGet.mSnakeInfos;
+	public static void readAllFutureFromFile(String path, ArrayList<SnakeInfo> list){
         if(list == null) {
         	    return;
         }
@@ -92,7 +91,7 @@ public class WebDownload {
 				list.remove(i);
 				continue;
 			}
-			String str = readFutureFile(snake);
+			String str = readFutureFile(path, snake.code);
 			if(str == null || str.isEmpty()){
 				list.remove(i);
 				continue;
@@ -106,11 +105,11 @@ public class WebDownload {
 			snake.futureList = info;
 		}
 	}
-	public static String readFutureFile(SnakeInfo snake) {
+	public static String readFutureFile(String path, String code) {
 		StringBuilder sb = new StringBuilder();
 		try {
 			String encoding = "UTF-8";
-			String filePath = "//Users//wangpeng//Project//Java//CatchRatio//future//" + snake.code;
+			String filePath = path + code;
 			File file = new File(filePath);			
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
 				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
@@ -122,6 +121,7 @@ public class WebDownload {
 				}
 				read.close();
 			} else {
+				System.out.println(filePath);
 				System.out.println("找不到指定的文件");
 			}
 		} catch (Exception e) {
@@ -134,7 +134,13 @@ public class WebDownload {
 	}
 	public static void writeFutureInfo(SnakeInfo snake, String str) {
 		try {
-			String path = "//Users//wangpeng//Project//Java//CatchRatio//future//"+snake.code;
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			String dirName = sdf.format(new Date());
+			File dirFile = new File(Constant.PATH_DATA + dirName);
+			if(!dirFile.exists()){
+				dirFile.mkdirs();
+			}
+			String path = Constant.PATH_DATA + dirName+ "//"+snake.code;
 			File file = new File(path);
 			if (!file.exists())
 				file.createNewFile();
@@ -155,7 +161,7 @@ public class WebDownload {
 	
 	public static void writeNewSnakeInfo() {
 		try {
-			String path = "//Users//wangpeng//Project//Java//CatchRatio//SnakeAll.txt";
+			String path = Constant.PATH_SNAKEALL;
 			File file = new File(path);
 			if (!file.exists())
 				file.createNewFile();
@@ -185,7 +191,7 @@ public class WebDownload {
 		try {
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 			String fileName = sdf.format(new Date());
-			String path = "//Users//wangpeng//Project//Java//CatchRatio//" + fileName+"_"+getDayStr(day);
+			String path = Constant.PATH_SORT + fileName+"_"+getDayStr(day);
 			File file = new File(path);
 			if (!file.exists())
 				file.createNewFile();

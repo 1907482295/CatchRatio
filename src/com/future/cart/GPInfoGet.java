@@ -10,12 +10,13 @@ public class GPInfoGet {
     public static ArrayList<SnakeInfo> mSnakeInfos;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		readTxtFile("//Users//wangpeng//Project//Java//CatchRatio//gpinfo.txt");
+		readTxtFile(Constant.PATH_GPINFO);
 
 	}
-	public static void getAllSnake(){
+	public static ArrayList<SnakeInfo> getAllSnake(){
 		mSnakeInfos = new ArrayList<SnakeInfo>();
-		readTxtFile("//Users//wangpeng//Project//Java//CatchRatio//SnakeAll.txt");
+		readTxtFile(Constant.PATH_SNAKEALL);
+		return mSnakeInfos;
 	}
 	public static void readTxtFile(String filePath){
         try {
@@ -50,7 +51,7 @@ public class GPInfoGet {
 			int n = str.indexOf('(');
 			String name = str.substring(0, n);
 			String code = str.substring(n+1, str.length()-1);
-            System.out.println("name:"+name+";code:"+code);
+            //System.out.println("name:"+name+";code:"+code);
             SnakeInfo info = new SnakeInfo();
             info.name = name;
             info.code = code;
@@ -64,7 +65,7 @@ public class GPInfoGet {
 		int n = str.indexOf('(');
 		String name = str.substring(0, n);
 		String code = str.substring(n + 1, str.length() - 1);
-		System.out.println("name:" + name + ";code:" + code);
+		//System.out.println("name:" + name + ";code:" + code);
 		SnakeInfo info = new SnakeInfo();
 		info.name = name;
 		info.code = code;
