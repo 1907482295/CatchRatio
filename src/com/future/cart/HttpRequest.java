@@ -34,6 +34,12 @@ public class HttpRequest {
 			connection.setRequestProperty("accept", "*/*");
 			connection.setRequestProperty("connection", "Keep-Alive");
 			connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+			connection.setRequestProperty("Upgrade-Insecure-Requests", "1");
+			connection.setRequestProperty("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+			connection.setRequestProperty("Accept-Encoding","gzip, deflate, sdch");
+			connection.setRequestProperty("Accept-Language","zh-CN,zh;q=0.8");
+			connection.setRequestProperty("Cache-Control","max-age=0");
+			connection.setRequestProperty("Host","stgy.upchina.com");
 			// 建立实际的连接
 			connection.connect();
 			// 获取所有响应头字段
@@ -49,7 +55,7 @@ public class HttpRequest {
 				result += line;
 			}
 		} catch (Exception e) {
-			System.out.println("发送GET请求出现异常！" + e);
+			System.out.println("发送GET请求出现异常！" + e +"|url:"+url);
 			//e.printStackTrace();
 		}
 		// 使用finally块来关闭输入流
